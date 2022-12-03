@@ -51,12 +51,12 @@ def round_score_part_2(left_token, right_token):
     else:
         player_move_score = move_score_map[move_beats_move_map[opponent_move]]
     return round_result + player_move_score
-    
+
 
 def count_score(rounds, round_score_fn):
     """Count the player's score given a list of rock-paper-scissors rounds."""
     return sum(round_score_fn(left_token, right_token) for left_token, right_token in rounds)
-        
+
 
 parsed_input = parse(get_input())
 print(count_score(parsed_input, round_score_part_1))
