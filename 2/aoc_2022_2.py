@@ -32,11 +32,12 @@ def round_score_part_1(left_token, right_token):
     opponent_move = opponent_move_map[left_token]
     player_move = player_move_map[right_token]
     if opponent_move is player_move:
-         return DRAW
+        round_result_score = DRAW
     elif move_beats_move_map[player_move] is opponent_move:
-        return WIN
-    return LOSE
-    return move_score_map[player_move] + round_result_score(opponent_move, player_move)
+        round_result_score = WIN
+    else:
+        round_result_score = LOSE
+    return move_score_map[player_move] + round_result_score
 
 
 def round_score_part_2(left_token, right_token):
