@@ -28,13 +28,21 @@ def get_input():
         return f.readlines()
 
 
+DIRECTIONS_MAP = {
+    "U": Position(0, 1),
+    "D": Position(0, -1),
+    "R": Position(1, 0),
+    "L": Position(-1, 0),
+}
+
+
 def parse_moves(problem_input):
     """Parse the moves in the problem input."""
     moves = []
     for move in problem_input:
         move = move.rstrip("\n")
         direction, steps = move.split(" ")
-        moves.append((direction, int(steps)))
+        moves.append((DIRECTIONS_MAP[direction], int(steps)))
     return moves
 
 
@@ -45,14 +53,6 @@ def clamp(val, min, max):
     if val > max:
         return max
     return val
-
-
-DIRECTIONS_TO_DELTAS = {
-    "U": Position(0, 1),
-    "D": Position(0, -1),
-    "R": Position(1, 0),
-    "L": Position(-1, 0),
-}
 
 
 def move_tail(tail, head):
@@ -74,8 +74,7 @@ def process_moves(moves, rope_length=2):
     visited = {knots[-1]}
     for direction, steps in moves:
         for _ in range(steps):
-            delta = DIRECTIONS_TO_DELTAS[direction]
-            knots[0] = knots[0].add(delta)
+            knots[0] = knots[0].add(direction)
             for head_index, tail_index in zip(knot_indices, knot_indices[1:]):
                 knots[tail_index] = move_tail(knots[tail_index], knots[head_index])
             visited.add(knots[-1])
